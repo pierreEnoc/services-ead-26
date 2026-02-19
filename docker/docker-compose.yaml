@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  postgres:
+    image: bitnami/postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGREST_USER=docker
+      - POSTGREST_PASSWORD=docker
+      - POSTGREST_DB=ead
+    volumes:
+      - poll_pg_data:/bitmani/postgresql
