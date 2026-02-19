@@ -1,0 +1,50 @@
+package com.ead_authuser.controller;
+
+import com.ead_authuser.model.UserModel;
+import com.ead_authuser.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/users")
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @GetMapping()
+    public ResponseEntity<UserModel> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(new UserModel());
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<Object> getOneUser(@PathVariable("userId") UUID userId ){
+        Optional<UserModel> userModelOptional= userService.findById(userId);
+
+                if(!userModelOptional.isPresent()) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+                }else {
+                    return ResponseEntity.status(HttpStatus.OK).body(userModelOptional.get());
+                }
+                //return userModelOptional.<ResponseEntity<Object>>map(userModel -> ResponseEntity.status(HttpStatus.OK).body(userModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"));
+     }
+
+     @DeleteMapping
+     public ResponseEntity<Object> deleteUser(@PathVariable("userId") UUID userId ){
+        Optional<UserModel> userModelOptional= userService.findById(userId);
+
+                if(!userModelOptional.isPresent()) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+                }else {
+                    userService.delete(userModelOptional.get());
+                    return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");
+                }
+     }
+}
