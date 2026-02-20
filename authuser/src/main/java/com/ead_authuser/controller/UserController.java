@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,8 +21,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping()
-    public ResponseEntity<UserModel> getAllUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(new UserModel());
+    public ResponseEntity<List<UserModel>> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
     @GetMapping("/{userId}")

@@ -1,5 +1,6 @@
 package com.ead_authuser.services.impl;
 
+import com.ead_authuser.dtos.UserDto;
 import com.ead_authuser.model.UserModel;
 import com.ead_authuser.repositories.UserRepository;
 import com.ead_authuser.services.UserService;
@@ -29,5 +30,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UserModel userModel) {
         userRepository.delete(userModel);
+    }
+
+    @Override
+    public void save(UserModel userModel) {
+        userRepository.save(userModel);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+      return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
