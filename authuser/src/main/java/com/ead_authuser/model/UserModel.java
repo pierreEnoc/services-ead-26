@@ -41,6 +41,7 @@ public class UserModel implements Serializable {
     private String phoneNumber;
     @Column(length = 20)
     private String cpf;
+    private String imageUrl;
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss''")
     private LocalDateTime creationDate;
