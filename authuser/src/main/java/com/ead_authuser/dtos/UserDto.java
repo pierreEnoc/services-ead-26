@@ -26,8 +26,8 @@ public class UserDto {
     @JsonView(UserView.RegistrationPost.class)
     private String username;
 
-    @NotBlank(groups = {UserView.RegistrationPost.class, UserView.PasswordPut.class})
-    @Size(min = 5, max = 50, groups = {UserView.RegistrationPost.class, UserView.PasswordPut.class})
+    @NotBlank(groups = UserView.RegistrationPost.class)
+    @Size(min = 5, max = 50, groups = UserView.RegistrationPost.class)
     @JsonView({UserView.RegistrationPost.class, UserView.UserPut.class})
     private String email;
 

@@ -79,7 +79,7 @@ public class UserController {
 
         if(!userModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        } if(!Objects.equals(userModelOptional.get().getPassword(), userDto.getOldPassword())) {
+        } if(!userModelOptional.get().getPassword().equals(userDto.getOldPassword())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Old password does not match!");
 
         }else {
