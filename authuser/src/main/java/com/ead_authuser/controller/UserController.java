@@ -49,7 +49,7 @@ public class UserController {
      public ResponseEntity<Object> deleteUser(@PathVariable("userId") UUID userId ){
         Optional<UserModel> userModelOptional= userService.findById(userId);
 
-                if(!userModelOptional.isPresent()) {
+                if(userModelOptional.isEmpty()) {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
                 }else {
                     userService.delete(userModelOptional.get());
@@ -63,7 +63,7 @@ public class UserController {
                                              @Validated UserDto userDto) {
         Optional<UserModel> userModelOptional= userService.findById(userId);
 
-        if(!userModelOptional.isPresent()) {
+        if(userModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         } else {
             var userModel = userModelOptional.get();
