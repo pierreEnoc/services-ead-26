@@ -22,7 +22,6 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userId;
-
     @Column(nullable = false, unique = true, length = 50)
     private String username;
     @Column(nullable = false, unique = true, length = 50)
