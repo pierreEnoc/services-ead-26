@@ -7,6 +7,7 @@ import com.ead.course.repositories.ModuleRepository;
 import com.ead.course.services.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Autowired
     LessonRepository lessonRepository;
 
+    @Transactional
     @Override
     public void delete(ModuleModel moduleModel) {
         List<LessonModel> lessonModelList = lessonRepository.findAllLessonIntoModule(moduleModel.getModuleId());
