@@ -68,9 +68,8 @@ public class CourseController {
     @GetMapping("/{courseId}")
     public ResponseEntity<Object> getCourse(@PathVariable(value = "courseId") UUID courseId) {
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
-        if (courseModelOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(courseModelOptional.get());
+        return courseModelOptional.<ResponseEntity<Object>>map(courseModel ->
+                ResponseEntity.status(HttpStatus.OK).body(courseModel)).orElseGet(() ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found."));
     }
 }

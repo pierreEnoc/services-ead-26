@@ -53,7 +53,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseModel> findAll() {
-        return List.of();
+        return courseRepository.findAll();
     }
 
 }

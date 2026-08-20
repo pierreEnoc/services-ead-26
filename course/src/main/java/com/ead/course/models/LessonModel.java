@@ -37,7 +37,6 @@ public class LessonModel implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "module_id")
     private ModuleModel module;
 
 }
