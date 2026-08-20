@@ -48,7 +48,7 @@ public class ModuleController {
     public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId,
                                                @PathVariable(value = "moduleId") UUID moduleId) {
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if (!moduleModelOptional.isPresent()) {
+        if (moduleModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
         moduleService.delete(moduleModelOptional.get());
@@ -60,7 +60,7 @@ public class ModuleController {
                                                @PathVariable(value = "moduleId") UUID moduleId,
                                                @RequestBody @Valid ModuleDto moduleDto) {
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if (!moduleModelOptional.isPresent()) {
+        if (moduleModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
 
@@ -79,10 +79,9 @@ public class ModuleController {
     public ResponseEntity<Object> getOneModule(@PathVariable(value = "courseId") UUID courseId,
                                             @PathVariable(value = "moduleId") UUID moduleId) {
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if (!moduleModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(moduleModelOptional.get());
+        return moduleModelOptional.<ResponseEntity<Object>>map(moduleModel ->
+                ResponseEntity.status(HttpStatus.OK).body(moduleModel)).orElseGet(() ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course."));
     }
 
 }
